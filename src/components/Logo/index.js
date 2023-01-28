@@ -1,9 +1,10 @@
-import React from 'react'
-import LogoImg from '../../assets/static/Logo.png';
-import {LogoStyle} from './styles'
+import React from "react";
+import LogoImg from "../../assets/static/Logo.png";
+import { Link } from "@reach/router";
 export const Logo = () => (
-    <div>
-        <LogoStyle src={LogoImg} className="float-end col-3"></LogoStyle> 
-    </div>
-    
-)
+  <div>
+    <Link to="/">
+      <img src={LogoImg} className="float-end col-3"></img>
+    </Link>
+  </div>
+);
