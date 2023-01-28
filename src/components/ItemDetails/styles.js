@@ -4,6 +4,8 @@ export const ContainerImage = styled.img`
   width: 680px;
   heigth: auto;
   border-radius: 4px;
+  max-height: 70%;
+  max-width: 60%;
 `;
 
 export const BuyButton = styled.button`

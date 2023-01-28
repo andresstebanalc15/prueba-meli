@@ -12,7 +12,8 @@ import {
 } from "./styles";
 
 export const ItemDetails = () => {
-  const image = "https://i.blogs.es/a6c6f4/promo_lead_touch/450_1000.webp";
+  const image =
+    "https://http2.mlstatic.com/D_NQ_NP_651710-MLM51559386433_092022-V.webp";
   return (
     <div className="row">
       <div className="col-9">
