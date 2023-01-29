@@ -11,18 +11,36 @@ const typeDefs = gql`
   }
 
   type Category {
-    category: String
+    name: String
   }
+
   type Price {
     currency: String
     amount: Int
-    decimals: Double
+    decimals: Float
   }
 
   type Item {
-    id: String
     title: String
     price: [Price]
+    picture: String
+    condition: String
+    free_shipping: String
+    sold_quantity: String
+    place: String
+    description: String
+  }
+
+  type Products {
+    id: ID
+    categories: [Category]
+    author: [Author!]
+    item: [Item]
+  }
+
+  type Query {
+    products: [Products]
+    productsId(id: ID!): Products
   }
 
   input UserCredentials {
@@ -47,59 +65,8 @@ function checkIsUserLogged(context) {
   return user;
 }
 
-function tryGetFavsFromUserLogged(context) {
-  try {
-    const { email } = checkIsUserLogged(context);
-    const user = userModel.find({ email });
-    return user.favs;
-  } catch (e) {
-    return [];
-  }
-}
-
 const resolvers = {
   Mutation: {
-    likeAnonymousPhoto: (_, { input }) => {
-      // find the photo by id and throw an error if it doesn't exist
-      const { id: productId } = input;
-      const product = productsModel.find({ id: productId });
-      if (!product) {
-        throw new Error(`Couldn't find photo with id ${productId}`);
-      }
-      // put a like to the photo
-      productsModel.addLike({ id: productId });
-      // get the updated photos model
-      const actualPhoto = productsModel.find({ id: productId });
-      return actualPhoto;
-    },
-    likePhoto: (_, { input }, context) => {
-      const { id: userId } = checkIsUserLogged(context);
-
-      // find the photo by id and throw an error if it doesn't exist
-      const { id: photoId } = input;
-      const photo = productsModel.find({ id: photoId });
-      if (!photo) {
-        throw new Error(`Couldn't find photo with id ${photoId}`);
-      }
-
-      const hasFav = userModel.hasFav({ id: userId, photoId });
-
-      if (hasFav) {
-        productsModel.removeLike({ id: photoId });
-        userModel.removeFav({ id: userId, photoId });
-      } else {
-        // put a like to the photo and add the like to the user database
-        productsModel.addLike({ id: photoId });
-        userModel.addFav({ id: userId, photoId });
-      }
-
-      // get favs from user before exiting
-      const favs = tryGetFavsFromUserLogged(context);
-      // get the updated photos model
-      const actualPhoto = productsModel.find({ id: photoId, favs });
-
-      return actualPhoto;
-    },
     // Handle user signup
     async signup(_, { input }) {
       // add 1 second of delay in order to see loading stuff
@@ -153,21 +120,11 @@ const resolvers = {
     },
   },
   Query: {
-    favs(_, __, context) {
-      const { email } = checkIsUserLogged(context);
-      const { favs } = userModel.find({ email });
-      return productsModel.list({ ids: favs, favs });
-    },
-    categories() {
+    products() {
       return productsModel.list();
     },
-    photo(_, { id }, context) {
-      const favs = tryGetFavsFromUserLogged(context);
-      return productsModel.find({ id, favs });
-    },
-    photos(_, { categoryId }, context) {
-      const favs = tryGetFavsFromUserLogged(context);
-      return productsModel.list({ categoryId, favs });
+    productsId(_, { id }) {
+      return productsModel.find({ id });
     },
   },
 };

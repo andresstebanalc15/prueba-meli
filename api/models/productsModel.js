@@ -4,4 +4,11 @@ function list() {
   return db.get("products").value();
 }
 
-module.exports = { list };
+function find(id) {
+  const product = db.get("products").find({ id: id.id.toString() }).value();
+  return {
+    ...product,
+  };
+}
+
+module.exports = { list, find };

@@ -1,17 +1,20 @@
 const express = require("express");
 const cors = require("cors");
 const { ApolloServer } = require("apollo-server-express");
+const { resolvers, typeDefs } = require("./schema");
 
 const { expressjwt } = require("express-jwt");
 
+// this is not secure! this is for dev purposes
 process.env.JWT_SECRET = process.env.JWT_SECRET || "somereallylongsecretkey";
 
 const PORT = process.env.PORT || 3500;
 const app = express();
-const { categories } = require("./db.json");
+const { products } = require("./db.json");
 
 app.use(cors());
 
+// auth middleware
 const auth = expressjwt({
   secret: process.env.JWT_SECRET,
   credentialsRequired: false,
@@ -21,9 +24,10 @@ const auth = expressjwt({
 require("./adapter");
 
 const server = new ApolloServer({
-  introspection: true,
-  playground: true,
-
+  introspection: true, // do this only for dev purposes
+  playground: true, // do this only for dev purposes
+  typeDefs,
+  resolvers,
   context: ({ req }) => {
     const { id, email } = req.user || {};
     return { id, email };
@@ -43,7 +47,7 @@ app.use(errorHandler);
 server.applyMiddleware({ app, path: "/graphql" });
 
 app.get("/products", function (req, res) {
-  res.send(categories);
+  res.send(products);
 });
 
 if (!process.env.NOW_REGION) {

@@ -1,11 +1,15 @@
 import React from "react";
-import CelImg from "../../assets/static/cel.jpeg";
 import { ContainerImage, PriceTitle, Style, TitleItem } from "./styles";
-export const ItemResult = ({ price = "", title = "", place = "" }) => (
+export const ItemResult = ({
+  price = "",
+  title = "",
+  place = "",
+  photo = "",
+}) => (
   <Style>
     <div className="row">
       <div className="col-2">
-        <ContainerImage src={CelImg} className="img-fluid" alt="..." />
+        <ContainerImage src={photo} className="img-fluid" alt="..." />
       </div>
       <div className="col-10">
         <div className="card-body">
