@@ -25,6 +25,6 @@ export const SalesText = styled.p`
   margin: 32px 0px 16px 0px;
 `;
 
-export const PriceInfo = styled.h1`
+export const PriceInfo = styled.h2`
   margin: 32px 0px;
 `;

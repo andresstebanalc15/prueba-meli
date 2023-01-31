@@ -1,6 +1,9 @@
 import React from "react";
 import { ContainerImage, PriceTitle, Style, TitleItem } from "./styles";
+import { Link } from "@reach/router";
+
 export const ItemResult = ({
+  id = "",
   price = "",
   title = "",
   place = "",
@@ -9,13 +12,21 @@ export const ItemResult = ({
   <Style>
     <div className="row">
       <div className="col-2">
-        <ContainerImage src={photo} className="img-fluid" alt="..." />
+        <Link to={"/items/" + id}>
+          <ContainerImage
+            src={photo}
+            className="rounded mx-auto d-block img-fluid"
+            alt="..."
+          />
+        </Link>
       </div>
       <div className="col-10">
         <div className="card-body">
           <div className="row">
             <div className="col-9">
-              <PriceTitle className="card-title">$ {price}</PriceTitle>
+              <PriceTitle className="card-title">
+                $ {price.toLocaleString("es-CO")}
+              </PriceTitle>
             </div>
             <div className="col-3">
               <p className="card-text">
