@@ -1,19 +1,21 @@
 import React from "react";
-import { ItemResult } from "../../components/ItemResult";
-import { Breadcrumbs } from "../../components/Breadcumbs";
-import { useFetchData } from "../../hocks/useFetchData";
+import { ItemResult } from "../components/ItemResult";
+import { Breadcrumbs } from "../components/Breadcrumbs";
+import { useFetchData } from "../hooks/useFetchData";
 
 export const SearchResult = () => {
   const queryParameters = new URLSearchParams(window.location.search);
   const search = queryParameters.get("search");
-  const todosURL = "http://localhost:8000/api/items?q=" + search;
-  const { items = {} } = useFetchData(todosURL);
+  const api = process.env.API;
+
+  const todosURL = api + "/api/items?q=" + search;
+  const { items = {}, categories = {} } = useFetchData(todosURL);
   return (
     <div className="container ">
-      <Breadcrumbs />
+      <Breadcrumbs categories={categories} />
       <div className="card p-2">
         {Object.values(items)
-          .filter((i, index) => index < 4)
+          .slice(0, 4)
           .map((product) => (
             <ItemResult
               key={product.id}

@@ -1,16 +1,16 @@
 import React from "react";
 import { GlobalStyle } from "./assets/styles/GlobalStyles";
-import { Home } from "./pages/Home";
-import { Items } from "./pages/Items";
 import { Router } from "@reach/router";
+import { Details } from "./pages/Details";
+import { SearchResult } from "./pages/SeachResult";
+import { Navbar } from "./components/Navbar";
 export const App = () => (
   <div>
     <GlobalStyle />
+    <Navbar />
     <Router>
-      <Home path="/" />
-      <Items path="/items" />
-      {/* <Items path="/items/:id" /> */}
-      <Items path="/items/:id" />
+      <SearchResult path="/items" />
+      <Details path="/items/:id" />
     </Router>
   </div>
 );

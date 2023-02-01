@@ -1,11 +1,13 @@
 import React, { useState, useCallback } from "react";
 import LogoImg from "../../assets/static/ic_search.png";
-import { Button } from "./styles";
+import { Button } from "./Input.styles";
 import { navigate } from "@reach/router";
 
 export const Input = ({ text = "" }) => {
   const redirectToSearch = () => {
     const search = document.getElementById("search").value;
+    document.getElementById("suggestion").className = "dropdown-menu";
+
     navigate("/items?search=" + search);
   };
 
@@ -20,19 +22,23 @@ export const Input = ({ text = "" }) => {
       timer = setTimeout(() => {
         timer = null;
         func.apply(context, args);
-      }, 500);
+      }, 200);
     };
   };
 
   const handleChange = (value) => {
-    const itemInfo = `http://localhost:8000/api/items?q=${value}`;
+    const api = process.env.API;
+    const itemInfo = `${api}/api/items?q=${value}`;
     fetch(itemInfo)
       .then((res) => res.json())
       .then((json) => {
-        document.getElementById("suggestion").className = "dropdown-menu show";
         setSuggestions(json.items);
-        console.log(json);
       });
+
+    value.length === 0
+      ? (document.getElementById("suggestion").className = "dropdown-menu")
+      : (document.getElementById("suggestion").className =
+          "dropdown-menu show");
   };
 
   const handleOnClick = (value) => {

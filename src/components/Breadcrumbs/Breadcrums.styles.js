@@ -5,7 +5,7 @@ export const BreadcrumbsList = styled.li`
   margin: 16px 0px 16px 0px;
 `;
 
-export const BreadcumbsAnchor = styled.a`
+export const BreadcrumbsAnchor = styled.a`
   color: #999999;
   text-decoration: none;
 `;

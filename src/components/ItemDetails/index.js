@@ -7,7 +7,7 @@ import {
   TextDescription,
   SalesText,
   PriceInfo,
-} from "./styles";
+} from "./ItemDetails.styles";
 
 export const ItemDetails = ({
   title,

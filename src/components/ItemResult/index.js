@@ -1,5 +1,10 @@
 import React from "react";
-import { ContainerImage, PriceTitle, Style, TitleItem } from "./styles";
+import {
+  ContainerImage,
+  PriceTitle,
+  Style,
+  TitleItem,
+} from "./ItemResult.styles";
 import { Link } from "@reach/router";
 
 export const ItemResult = ({
@@ -10,7 +15,7 @@ export const ItemResult = ({
   photo = "",
 }) => (
   <Style>
-    <div className="row">
+    <div className="row" data-testid="items">
       <div className="col-2">
         <Link to={"/items/" + id}>
           <ContainerImage
