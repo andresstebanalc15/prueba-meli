@@ -10,8 +10,10 @@ npm install
 # Ejecución
 
 ```
-npm run start
+npm run dev
 ```
+
+Se recomienda ejecutar el proyecto en el puerto 8080 debido a la configuración de los cors para el consumo del api.
 
 # Test
 
